@@ -37,14 +37,14 @@ pre-commit:
 ### Build dependencies ###
 .PHONY: build
 build:
-	@ rm -rf bin && mkdir -p bin/python
-	@ poetry export -f requirements.txt --output bin/requirements.txt
+	@ rm -rf bin && mkdir -p bin/lambda-layer/python
+	@ poetry export -f requirements.txt --output bin/lambda-layer/requirements.txt
 	@ docker run --rm \
 		-v $$(pwd):/foo \
 		-w /foo \
 		lambci/lambda:build-python3.8 \
-		pip install -r bin/requirements.txt --target bin/python
-	${SUCCESS} "Built dependencies into bin/python"
+		pip install -r bin/lambda-layer/requirements.txt --target bin/lambda-layer/python
+	${SUCCESS} "Built dependencies into bin/lambda-layer/python"
 
 
 ### Testing ###

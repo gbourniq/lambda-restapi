@@ -34,6 +34,6 @@ Resources:
     Properties:
       LayerName: fastapi-python-lib
       Description: Python dependencies for REST APIs
-      ContentUri: ../bin/.
+      ContentUri: ../bin/lambda-layer/.
       CompatibleRuntimes:
         - python3.8
