@@ -1,0 +1,64 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  SAM Template to deploy a Lambda running the FastAPI framework
+  behind an API Gateway
+
+# Parameters:
+#   EnvVar1:
+#     Description: Environment variable passed at stack runtime
+#     Type: String
+
+Globals:
+  Function:
+    Timeout: 60
+
+Resources:
+  FastApiFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Layers:
+        - !Ref libs
+      Events:
+        ApiEvent:
+          Type: Api
+          Properties:
+            RestApiId: !Ref FastApiGateway
+            Path: /{proxy+}
+            Method: ANY
+      CodeUri: ./
+      Handler: fast_app.main.lambda_handler
+      Runtime: python3.8
+      MemorySize: 128
+      Description: Lambda running the FastAPI framework
+      Policies: # AWS Managed Policies
+        - AmazonSSMFullAccess
+        - AWSLambdaBasicExecutionRole
+        - AWSLambdaReadOnlyAccess
+      # Environment:
+      #   Variables:
+      #     ENVIRONMENT_VARIABLE_1: !Ref EnvVar1
+      # AutoPublishAlias: live
+
+  FastApiGateway:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: dev
+      OpenApiVersion: '3.0.0'
+
+  libs:
+    Type: AWS::Serverless::LayerVersion
+    Properties:
+      LayerName: fastapi-python-lib
+      Description: Python dependencies for REST APIs
+      ContentUri: ../bin/.
+      CompatibleRuntimes:
+          - python3.8
+
+Outputs:
+  FastApiFunction:
+    Description: "Lambda Function ARN to be mapped with a Deployment Resource in the API GTW Console."
+    Value: !GetAtt FastApiFunction.Arn
+  FastApiGateway:
+    Description: "API Gateway endpoint dev URL for the FastAPI rest framework"
+    Value: !Sub "https://${FastApiGateway}.execute-api.${AWS::Region}.amazonaws.com/dev/docs/"

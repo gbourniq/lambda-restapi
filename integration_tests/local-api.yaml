@@ -1,0 +1,39 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  SAM Template which defines a mock / local API Gateway for requests testing.
+  The local server can be started with `make start-api`.
+  Note this template is not for the actual Lambda deployment to AWS`:
+  sam-application/template.yaml is used instead
+Resources:
+  LocalFastApiFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ../sam-application
+      Handler: fast_app.main.lambda_handler
+      Runtime: python3.8
+      MemorySize: 128
+      Timeout: 60
+      Description: Lambda running the FastAPI framework
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - AWSLambdaReadOnlyAccess
+        - AmazonSSMFullAccess
+      Layers:
+        - !Ref libs
+      # Api Gateway for local testing
+      Events:
+        ApiEvent:
+          Type: Api
+          Properties:
+            Path: /{proxy+}
+            Method: ANY
+  # Make sure libs are up to date with `make build`
+  libs:
+    Type: AWS::Serverless::LayerVersion
+    Properties:
+      LayerName: fastapi-python-lib
+      Description: Python dependencies for REST APIs
+      ContentUri: ../bin/.
+      CompatibleRuntimes:
+        - python3.8

@@ -1,0 +1,61 @@
+[tool.poetry]
+name = "lambda-env"
+version = "1.0.0"
+description = "Simple Lambda function with Python 3.8, managed by the SAM framework"
+authors = []
+
+[tool.poetry.dependencies]
+aws-lambda-powertools = {version = "^1.9.0", extras = ["pydantic", "typing_extensions"]}
+python = "3.8.0"                                    # PSF
+fastapi = "^0.62.0"                                 # MIT
+mangum = "^0.10.0"                                  # Apache 2.0
+requests = "^2.22"                                  # Apache 2.0
+uvicorn = "^0.13.1"                                 # BSD 3
+
+[tool.poetry.dev-dependencies]
+autoflake = "^1.4"                                  # MIT
+awscli = "^1.18.197"                                # Apache 2.0
+aws-sam-cli = "^1.13.2"                             # Apache 2.0
+black = "19.10b0"                                   # MIT
+cfn-lint = "^0.43.0"                                # MIT
+chevron = "^0.13.1"                                 # MIT
+coverage-badge = "^1.0.1"                           # MIT
+dateparser = "^1.0.0"                               # BSD 3
+docker = "^4.4.0"                                   # Apache 2.0
+flask = "^1.1.2"                                    # BSD 3
+isort = "4.3.4"                                     # MIT
+junit_xml = "^1.9"                                  # MIT
+jsonschema = "^3.2.0"                               # MIT
+networkx = "^2.5"                                   # MIT
+pylint = "^2.6.0"                                   # GPL
+pytest = "6.0.0"                                    # MIT
+pytest-cov = "^2.10.1"                              # MIT
+pytest-env = "^0.6.2"                               # MIT
+pre-commit = "^2.8.2"                               # MIT
+wrapt = "^1.12.1"                                   # MIT
+
+[tool.pytest.ini_options]
+testpaths = "tests"
+filterwarnings = '''
+    error
+    ignore::UserWarning
+'''
+python_files = ["tests.py", "test_*", "*_tests.py"]
+# Ignore python packages in sam-application/bin/ 
+addopts = '''
+  --ignore=integration_tests/run_api_tests.py
+  --ignore=bin/python/
+  --strict
+  --tb=short
+  --cov=.
+  --cov-branch
+  --cov-report=term-missing
+  --cov-report=html
+  --no-cov-on-fail
+  --cov-fail-under=70
+'''
+env = ["SECRET_KEY=secret"]
+
+[build-system]
+requires = ["wheel", "tomlkit", "poetry>=1.1.3"] # PEP 518
+build-backend = "poetry.masonry.api"
