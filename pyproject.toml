@@ -5,6 +5,7 @@ description = "Simple Lambda function with Python 3.8, managed by the SAM framew
 authors = []
 
 [tool.poetry.dependencies]
+aiofiles = "^0.6.0"                                 # Apache 2.0
 aws-lambda-powertools = {version = "^1.9.0", extras = ["pydantic", "typing_extensions"]}
 python = "3.8.0"                                    # PSF
 fastapi = "^0.62.0"                                 # MIT

@@ -32,3 +32,7 @@ class ImplementedHttpMethods(Enum):
 
     GET = "GET"
     POST = "POST"
+
+
+class CustomExceptionCodes(Enum):
+    HTTP_419_CREATION_FAILED = 419

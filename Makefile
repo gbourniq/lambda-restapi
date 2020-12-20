@@ -48,7 +48,7 @@ build:
 
 
 ### Testing ###
-.PHONY: unit-tests get-cov-report start-fast-api-server start-api test-api-local
+.PHONY: unit-tests get-cov-report start-fastapi-server start-api test-api-local
 
 unit-tests:
 	@ ${INFO} "Running unit tests..."
@@ -58,7 +58,7 @@ unit-tests:
 open-cov-report:
 	@ open htmlcov/index.html
 
-start-fast-api-server:
+start-fastapi-server:
 	@ uvicorn lambda_restapi.main:app --host 0.0.0.0 --port 8080 --reload
 
 start-api:

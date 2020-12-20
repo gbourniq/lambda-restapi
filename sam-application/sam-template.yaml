@@ -67,4 +67,4 @@ Outputs:
     Value: !GetAtt FastApiFunction.Arn
   FastApiGateway:
     Description: "API Gateway endpoint dev URL for the FastAPI rest framework"
-    Value: !Sub "https://${FastApiGateway}.execute-api.${AWS::Region}.amazonaws.com/${FastApiRootPath}/docs/"
+    Value: !Sub "https://${FastApiGateway}.execute-api.${AWS::Region}.amazonaws.com/${FastApiRootPath}/"
