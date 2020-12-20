@@ -35,9 +35,9 @@ Resources:
         - AmazonSSMFullAccess
         - AWSLambdaBasicExecutionRole
         - AWSLambdaReadOnlyAccess
-      # Environment:
-      #   Variables:
-      #     ENVIRONMENT_VARIABLE_1: !Ref EnvVar1
+      Environment:
+        Variables:
+          ROOT_PATH: /dev
       # AutoPublishAlias: live
 
   FastApiGateway:

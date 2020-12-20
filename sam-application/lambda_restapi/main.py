@@ -8,16 +8,12 @@ from fastapi import FastAPI
 from mangum import Mangum
 
 from lambda_restapi.api.api_v1.api import router as api_router
-from lambda_restapi.constants import API_V1_STR, PROJECT_NAME
+from lambda_restapi.constants import API_V1_STR, PROJECT_NAME, ROOT_PATH
 
-app = FastAPI(
-    title=PROJECT_NAME,
-    # root_path must match the API Gateway deployment stage
-    # or should be / if using a custom domain name
-    root_path="/dev",
-)
+app = FastAPI(title=PROJECT_NAME, root_path=ROOT_PATH)
 
 app.include_router(api_router, prefix=API_V1_STR)
+
 
 @app.get("/ping")
 def pong():
