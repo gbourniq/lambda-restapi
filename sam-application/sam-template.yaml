@@ -4,10 +4,14 @@ Description: >
   SAM Template to deploy a Lambda running the FastAPI framework
   behind an API Gateway
 
-# Parameters:
-#   EnvVar1:
-#     Description: Environment variable passed at stack runtime
-#     Type: String
+Parameters:
+  APIStageName:
+    Description: >
+      Name of the API Gateway Deployment Stage, which also must match the
+      root path for FastAPI. This will add the extra path prefix that 
+      is not seen by the FastAPI application
+    Type: String
+    Default: dev
 
 Globals:
   Function:
@@ -37,13 +41,13 @@ Resources:
         - AWSLambdaReadOnlyAccess
       Environment:
         Variables:
-          ROOT_PATH: /dev
+          ROOT_PATH: !Ref APIStageName
       # AutoPublishAlias: live
 
   FastApiGateway:
     Type: AWS::Serverless::Api
     Properties:
-      StageName: dev
+      StageName: !Ref APIStageName
       OpenApiVersion: '3.0.0'
 
   libs:
@@ -61,4 +65,4 @@ Outputs:
     Value: !GetAtt FastApiFunction.Arn
   FastApiGateway:
     Description: "API Gateway endpoint dev URL for the FastAPI rest framework"
-    Value: !Sub "https://${FastApiGateway}.execute-api.${AWS::Region}.amazonaws.com/dev/docs/"
+    Value: !Sub "https://${FastApiGateway}.execute-api.${AWS::Region}.amazonaws.com/${APIStageName}/docs/"
