@@ -13,9 +13,9 @@ script:
   # CI
   - make env
   - conda activate lambda-restapi
-  - make build
   - make unit-tests
   # CD
+  - make build
   - make package
   # - make start-api &
   # - make test-api-local
