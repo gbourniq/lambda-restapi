@@ -1,3 +1,4 @@
+from os import getenv
 from pathlib import Path
 from typing import List
 
@@ -20,7 +21,10 @@ ALLOWED_HOSTS: List[str] = config(
 )
 
 # Static assets
-ASSETS_PATH: Path = Path(__file__).resolve().parent / "assets"
+if getenv("ASSETS_PATH"):
+    ASSETS_PATH = Path(getenv("ASSETS_PATH"))
+else:
+    ASSETS_PATH = Path(__file__).resolve().parent / "assets"
 ASSETS_PATH.mkdir(exist_ok=True)
 
 # Lambda Powertool variables:

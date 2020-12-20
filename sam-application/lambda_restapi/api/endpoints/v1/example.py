@@ -6,7 +6,7 @@ from lambda_restapi.models.output import OutputExample
 router = APIRouter()
 
 
-@router.get("/example", tags=["example get"])
+@router.get("/example")
 def example_get():
     """
     Say hej!
@@ -19,7 +19,7 @@ def example_get():
     return {"msg": "Hej!"}
 
 
-@router.post("/example", response_model=OutputExample, tags=["example post"])
+@router.post("/example", response_model=OutputExample)
 def example_endpoint(inputs: InputExample):
     """
     Multiply two values

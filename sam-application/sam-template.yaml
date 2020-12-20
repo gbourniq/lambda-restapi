@@ -44,6 +44,7 @@ Resources:
       Environment:
         Variables:
           ROOT_PATH: !Sub "/${FastApiRootPath}"
+          ASSETS_PATH: /tmp/assets
       # AutoPublishAlias: live
 
   FastApiGateway:
