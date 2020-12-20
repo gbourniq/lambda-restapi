@@ -44,7 +44,7 @@ python_files = ["tests.py", "test_*", "*_tests.py"]
 # Ignore python packages in sam-application/bin/ 
 addopts = '''
   --ignore=integration_tests/run_api_tests.py
-  --ignore=bin/python/
+  --ignore=bin/lambda-layer/python/
   --strict
   --tb=short
   --cov=.
