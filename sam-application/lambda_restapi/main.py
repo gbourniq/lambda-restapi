@@ -7,13 +7,13 @@ to Lambda and vice versa.
 from fastapi import FastAPI
 from mangum import Mangum
 
-from fast_app.api.api_v1.api import router as api_router
-from fast_app.core.config import API_V1_STR, PROJECT_NAME
+from lambda_restapi.api.api_v1.api import router as api_router
+from lambda_restapi.constants import API_V1_STR, PROJECT_NAME
 
 app = FastAPI(
     title=PROJECT_NAME,
     # if not custom domain
-    openapi_prefix="/prod",
+    openapi_prefix="/dev",
 )
 
 

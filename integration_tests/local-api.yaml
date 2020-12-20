@@ -10,7 +10,7 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       CodeUri: ../sam-application
-      Handler: fast_app.main.lambda_handler
+      Handler: lambda_restapi.main.lambda_handler
       Runtime: python3.8
       MemorySize: 128
       Timeout: 60

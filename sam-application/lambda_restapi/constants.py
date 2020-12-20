@@ -6,10 +6,16 @@ variables names used to retrieve data from the SSM Parameter store
 from distutils.util import strtobool
 from enum import Enum
 from os import getenv
+from starlette.datastructures import CommaSeparatedStrings
+
 
 MAX_ORDER_ITEM_ID = 100  # For Pydantic validation
 MIN_ORDER_ITEM_ID = 1  # For Pydantic validation
 
+
+ALLOWED_HOSTS = CommaSeparatedStrings(getenv("ALLOWED_HOSTS", ""))
+API_V1_STR = "/api/v1"
+PROJECT_NAME = "FastAPI-AWS-Lambda-Example-API"
 
 class PowertoolsVariables(Enum):
     """

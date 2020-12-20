@@ -8,7 +8,7 @@ from typing import Any, Dict
 import pytest
 from aws_lambda_powertools.utilities.typing import LambdaContext
 
-from fast_app.constants import ImplementedHttpMethods
+from lambda_restapi.constants import ImplementedHttpMethods
 
 ROOT_DIR = Path(__file__).resolve().parent
 API_EVENT_JSON = ROOT_DIR / "test_events/mock-api-gtw-event.json"

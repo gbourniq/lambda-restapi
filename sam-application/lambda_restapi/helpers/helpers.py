@@ -9,7 +9,7 @@ from aws_lambda_powertools import Logger, Metrics
 from aws_lambda_powertools.utilities import parameters
 from aws_lambda_powertools.utilities.parameters.exceptions import GetParameterError
 
-from fast_app.constants import PowertoolsVariables
+from lambda_restapi.constants import PowertoolsVariables
 
 # if PowertoolsVariables.BOTOCORE_LEVEL_LOGGING.value:
 #     boto3.set_stream_logger()

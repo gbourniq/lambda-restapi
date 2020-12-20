@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.com/gbourniq/lambda-fastapi.svg?branch=main)](https://travis-ci.com/gbourniq/lambda-restapi)
+[![Build Status](https://travis-ci.com/gbourniq/lambda-restapi.svg?branch=main)](https://travis-ci.com/gbourniq/lambda-restapi)
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit)
 ![Pylint](.github/sam-application.svg)
 ![Coverage](.github/coverage.svg)

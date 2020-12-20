@@ -12,7 +12,7 @@ install:
 script:
   # CI
   - make env
-  - conda activate lambda-env
+  - conda activate lambda-restapi
   - make build
   - make unit-tests
   # CD

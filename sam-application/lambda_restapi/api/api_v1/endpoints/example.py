@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 
-from fast_app.core.models.input import InputExample
-from fast_app.core.models.output import OutputExample
+from lambda_restapi.core.models.input import InputExample
+from lambda_restapi.core.models.output import OutputExample
 
 router = APIRouter()
 

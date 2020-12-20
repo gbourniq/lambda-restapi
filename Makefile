@@ -2,7 +2,7 @@
 SHELL=/bin/bash -e -o pipefail
 
 ### Environment variables ###
-CONDA_ENV_NAME=lambda-fastapi
+CONDA_ENV_NAME=lambda-restapi
 CONDA_ACTIVATE=source $$(conda info --base)/etc/profile.d/conda.sh ; conda activate
 S3_BUCKET_NAME=gbournique-s3-sam-builds
 # Deployed resources
@@ -17,14 +17,14 @@ API_KEY_NAME=MyApiKey
 ### Environment and pre-commit hooks ###
 .PHONY: env env-update pre-commit
 env:
-	@ ${INFO} "Creating conda environment and poetry dependencies"
+	@ ${INFO} "Creating ${CONDA_ENV_NAME} conda environment and poetry dependencies"
 	@ conda env create -f environment.yml -n $(CONDA_ENV_NAME)
 	@ ($(CONDA_ACTIVATE) $(CONDA_ENV_NAME); poetry install)
 	@ ${SUCCESS} "${CONDA_ENV_NAME} conda environment has been created and dependencies installed with Poetry."
 	@ ${MESSAGE} "Please activate the environment with: conda activate ${CONDA_ENV_NAME}"
 
 env-update:
-	@ ${INFO} "Updating conda environment and poetry dependencies"
+	@ ${INFO} "Updating ${CONDA_ENV_NAME} conda environment and poetry dependencies"
 	@ conda env update -f environment.yml -n $(CONDA_ENV_NAME)
 	@ ($(CONDA_ACTIVATE) $(CONDA_ENV_NAME); poetry update)
 	@ ${SUCCESS} "${CONDA_ENV_NAME} conda environment and poetry dependencies have been updated!"
@@ -59,7 +59,7 @@ open-cov-report:
 	@ open htmlcov/index.html
 
 start-fast-api-server:
-	@ uvicorn fast_app.main:app --host 0.0.0.0 --port 8080 --reload
+	@ uvicorn lambda_restapi.main:app --host 0.0.0.0 --port 8080 --reload
 
 start-api:
 	@ ${INFO} "Running local API to test incoming API Gateway Proxy events"
