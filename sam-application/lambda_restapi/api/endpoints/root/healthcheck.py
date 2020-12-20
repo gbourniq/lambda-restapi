@@ -3,7 +3,7 @@ from fastapi import APIRouter
 router = APIRouter()
 
 
-@router.get("/ping", include_in_schema=False)
+@router.get("/ping")
 def pong():
     """
     Sanity check.
