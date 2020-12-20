@@ -5,28 +5,38 @@ to Lambda and vice versa.
 """
 
 from fastapi import FastAPI
+from fastapi.exceptions import RequestValidationError
 from mangum import Mangum
+from starlette.exceptions import HTTPException
+from starlette.middleware.cors import CORSMiddleware
 
-from lambda_restapi.api.api_v1.api import router as api_router
-from lambda_restapi.constants import API_V1_STR, PROJECT_NAME, ROOT_PATH
-
-app = FastAPI(title=PROJECT_NAME, root_path=ROOT_PATH)
-
-app.include_router(api_router, prefix=API_V1_STR)
-
-
-@app.get("/ping")
-def pong():
-    """
-    Sanity check.
-
-    This will let the user know that the service is operational.
-
-    And this path operation will:
-    * show a lifesign
-
-    """
-    return {"ping": "pong!"}
+from lambda_restapi.api.endpoints import router as api_router
+from lambda_restapi.api.errors import http422_error_handler, http_error_handler
+from lambda_restapi.core.config import (
+    ALLOWED_HOSTS,
+    API_PREFIX,
+    DEBUG,
+    PROJECT_NAME,
+    ROOT_PATH,
+    VERSION,
+)
 
 
-lambda_handler = Mangum(app, enable_lifespan=False)
+def get_application() -> FastAPI:
+    app = FastAPI(title=PROJECT_NAME, debug=DEBUG, version=VERSION, root_path=ROOT_PATH)
+
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=ALLOWED_HOSTS or ["*"],
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
+
+    app.add_exception_handler(HTTPException, http_error_handler)
+    app.add_exception_handler(RequestValidationError, http422_error_handler)
+
+    app.include_router(api_router, prefix=API_PREFIX)
+
+
+lambda_handler = Mangum(get_application(), enable_lifespan=False)

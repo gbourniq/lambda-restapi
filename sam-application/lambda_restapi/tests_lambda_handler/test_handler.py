@@ -14,6 +14,10 @@
 # from hello_world.constants import MAX_ORDER_ITEM_ID, MIN_ORDER_ITEM_ID
 
 
+def test_dummy():
+    pass
+
+
 # def build_mock_event(
 #     mock_api_event: Dict[str, Any],
 #     multi_values_qstr_params: Dict[str, List[str]] = None,

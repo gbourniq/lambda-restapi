@@ -3,7 +3,7 @@
 import pytest
 from aws_lambda_powertools.utilities.parameters.exceptions import GetParameterError
 
-from lambda_restapi.helpers.helpers import get_ssm_parameter
+from lambda_restapi.helpers.aws_services import get_ssm_parameter
 
 
 def test_invalid_ssm_parameter_with_default():

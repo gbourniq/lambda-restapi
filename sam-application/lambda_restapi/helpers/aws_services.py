@@ -1,29 +1,12 @@
 """
-This module defines various helper functions, and the
-logger and metrics objects
+This module defines various helper functions to communicate with AWS services
 """
-import json
-from typing import Dict, List, Optional, Union
+from typing import List, Optional, Union
 
-from aws_lambda_powertools import Logger, Metrics
 from aws_lambda_powertools.utilities import parameters
 from aws_lambda_powertools.utilities.parameters.exceptions import GetParameterError
 
-from lambda_restapi.constants import PowertoolsVariables
-
-# if PowertoolsVariables.BOTOCORE_LEVEL_LOGGING.value:
-#     boto3.set_stream_logger()
-#     boto3.set_stream_logger("botocore")
-
-logger = Logger(
-    service=PowertoolsVariables.POWERTOOLS_SERVICE_NAME.value,
-    level=PowertoolsVariables.LOG_LEVEL.value,
-)
-
-metrics = Metrics(
-    service=PowertoolsVariables.POWERTOOLS_SERVICE_NAME.value,
-    namespace=PowertoolsVariables.POWERTOOLS_METRICS_NAMESPACE.value,
-)
+from lambda_restapi.core.logging import logger
 
 
 def get_ssm_parameter(
@@ -44,11 +27,3 @@ def get_ssm_parameter(
             return default
         raise get_param_err
     return data
-
-
-def build_response(status_code: int, body: Dict) -> Dict[str, str]:
-    """Build a single response schema for all endpoints"""
-    return {
-        "statusCode": status_code,
-        "body": json.dumps(body),
-    }
