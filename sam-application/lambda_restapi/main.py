@@ -12,13 +12,12 @@ from lambda_restapi.constants import API_V1_STR, PROJECT_NAME
 
 app = FastAPI(
     title=PROJECT_NAME,
-    # if not custom domain
-    openapi_prefix="/dev",
+    # root_path must match the API Gateway deployment stage
+    # or should be / if using a custom domain name
+    root_path="/dev",
 )
 
-
 app.include_router(api_router, prefix=API_V1_STR)
-
 
 @app.get("/ping")
 def pong():

@@ -1,6 +1,6 @@
 """
 Test basic GET and POST requests against a local or real API Gateway endpoint.
-This ensures DEV and PROD endpoints are secured, and pointing to the latest
+This ensures public AWS API Gateway endpoints are secured, and pointing to the latest
 Lambda application code.
 More extensive test cases are defined in unit-tests in sam-application/
 """
