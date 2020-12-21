@@ -13,11 +13,11 @@ script:
   # CI
   - make env
   - conda activate lambda-restapi
-  - make unit-tests
+  - make test
   # CD
   - make build
   - make package
-  # - make start-api &
-  # - make test-api-local
+  - make start-api &
+  - make test-local-api
   - make deploy
-  # - make test-api-dev
+  - make test-dev-api

@@ -67,7 +67,10 @@ start-api:
 test-local-api:
 	@ ${INFO} "Running tests against a FastAPI server at http://127.0.0.1:3000"
 	@ export TEST_SERVER=http://127.0.0.1:3000 && pytest .
-	@ ${INFO} "Run 'make open-cov-report' to view coverage details"
+
+test-dev-api:
+	@ ${INFO} "Running tests against a FastAPI server at $$($(call get_dev_endpoint))"
+	@ export TEST_SERVER=$$($(call get_dev_endpoint)) && pytest .
 
 open-cov-report:
 	@ open htmlcov/index.html
