@@ -1,3 +1,5 @@
+"""This module defines the main router among all endpoints"""
+
 from fastapi import APIRouter
 
 from lambda_restapi.api.endpoints.root import router as root_router

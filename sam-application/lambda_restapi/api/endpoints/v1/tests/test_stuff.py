@@ -1,3 +1,5 @@
+"""This module defines unit tests for the stuff endpoint"""
+
 from http import HTTPStatus
 from typing import Dict
 

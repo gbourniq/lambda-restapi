@@ -35,4 +35,6 @@ class ImplementedHttpMethods(Enum):
 
 
 class CustomExceptionCodes(Enum):
+    """Custom HTTP status codes for custom exceptions"""
+
     HTTP_419_CREATION_FAILED = 419

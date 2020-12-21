@@ -8,8 +8,8 @@ from typing import NoReturn, Optional
 from fastapi import Header
 from pydantic import BaseModel, Field
 
-from lambda_restapi.api.errors.exceptions import MyCustomException
 from lambda_restapi.core.config import SECRET_KEY_HEADER
+from lambda_restapi.helpers.exceptions import MyCustomException
 
 
 class ModelName(str, Enum):

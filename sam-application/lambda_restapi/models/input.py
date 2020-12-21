@@ -1,3 +1,4 @@
+"""This module defines pydantic models for incoming HTTP body requests"""
 from pydantic import BaseModel, Field
 
 from lambda_restapi.helpers.constants import MAX_ORDER_ITEM_ID, MIN_ORDER_ITEM_ID
@@ -5,8 +6,10 @@ from lambda_restapi.models.common import DateTimeModelMixin, IDModelMixin
 
 
 class InputExample(IDModelMixin, DateTimeModelMixin, BaseModel):
-    a: int = Field(..., title="Input value a")
-    b: int = Field(..., title="Input value b")
+    """Dummy input"""
+
+    a: int = Field(..., title="Input value a")  # pylint: disable=invalid-name
+    b: int = Field(..., title="Input value b")  # pylint: disable=invalid-name
 
 
 class OrderItem(BaseModel):

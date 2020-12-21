@@ -17,7 +17,6 @@ from lambda_restapi.api.errors import (
     http422_error_handler,
     http_error_handler,
 )
-from lambda_restapi.api.errors.exceptions import MyCustomException
 from lambda_restapi.core.config import (
     ALLOWED_HOSTS,
     API_PREFIX,
@@ -27,10 +26,11 @@ from lambda_restapi.core.config import (
     ROOT_PATH,
     VERSION,
 )
+from lambda_restapi.helpers.exceptions import MyCustomException
 
 
 def get_application() -> FastAPI:
-
+    """Returns a FastAPI application"""
     # Initialise FastAPI app
     application = FastAPI(
         title=PROJECT_NAME,
@@ -53,6 +53,7 @@ def get_application() -> FastAPI:
 
     # Custom middleware
     @application.middleware("http")
+    # pylint: disable=unused-variable
     async def add_process_time_header(request: Request, call_next):
         """Add the `x-process-time` response header to every requests."""
         start_time = time.time()
@@ -70,7 +71,9 @@ def get_application() -> FastAPI:
 
     # Add mount static files for generated assets to be downloadable
     # application.mount(
-    #     f"/{ASSETS_PATH.name}", StaticFiles(directory=f"/{ASSETS_PATH}"), name="static",
+    #     f"/{ASSETS_PATH.name}",
+    #     StaticFiles(directory=f"/{ASSETS_PATH}"),
+    #     name="static",
     # )
 
     return application

@@ -1,3 +1,4 @@
+"""This module defines tests for the api/v1/example endpoint"""
 from http import HTTPStatus
 
 from fastapi.testclient import TestClient

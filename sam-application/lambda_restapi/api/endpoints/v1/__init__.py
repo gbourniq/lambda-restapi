@@ -1,7 +1,9 @@
+"""This module defines the main router among all api/v1 endpoints"""
+
 from fastapi import APIRouter, Depends
 
-from .example import router as example_router
-from .stuff import router as stuff_router
+from lambda_restapi.api.endpoints.v1.example import router as example_router
+from lambda_restapi.api.endpoints.v1.stuff import router as stuff_router
 from lambda_restapi.api.dependencies.common import verify_api_key
 
 router = APIRouter()

@@ -1,3 +1,4 @@
+"""This module defines the main router among all ROOT endpoints"""
 from fastapi import APIRouter
 
 from .healthcheck import router as healthcheck_router

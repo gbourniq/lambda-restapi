@@ -1,3 +1,4 @@
+"""This module defines the main configuration parameters for the FastAPI app"""
 from os import getenv
 from typing import List
 

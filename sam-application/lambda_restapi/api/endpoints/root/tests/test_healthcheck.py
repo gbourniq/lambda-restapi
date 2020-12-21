@@ -1,3 +1,4 @@
+"""This module defines unit tests for the healthcheck endpoint"""
 from http import HTTPStatus
 
 from fastapi.testclient import TestClient

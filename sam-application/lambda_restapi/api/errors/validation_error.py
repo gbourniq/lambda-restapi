@@ -1,3 +1,8 @@
+"""
+This module defines the fastapi handler function for
+RequestValidationError and ValidationError errors
+"""
+
 from typing import Union
 
 from fastapi.exceptions import RequestValidationError
@@ -12,6 +17,10 @@ from starlette.status import HTTP_422_UNPROCESSABLE_ENTITY
 async def http422_error_handler(
     _: Request, exc: Union[RequestValidationError, ValidationError],
 ) -> JSONResponse:
+    """
+    Fastapi handler function for RequestValidationError
+    and ValidationError exceptions
+    """
     return JSONResponse(
         {"errors": exc.errors()}, status_code=HTTP_422_UNPROCESSABLE_ENTITY,
     )
