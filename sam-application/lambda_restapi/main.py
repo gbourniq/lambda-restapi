@@ -7,13 +7,11 @@ import time
 
 from fastapi import FastAPI, Request
 from fastapi.exceptions import RequestValidationError
-from fastapi.staticfiles import StaticFiles
 from mangum import Mangum
 from starlette.exceptions import HTTPException
 from starlette.middleware.cors import CORSMiddleware
 
-from lambda_restapi.api.endpoints.root import router as root_router
-from lambda_restapi.api.endpoints.v1 import router as api_router
+from lambda_restapi.api.endpoints import router as main_router
 from lambda_restapi.api.errors import (
     creation_error_handler,
     http422_error_handler,
@@ -23,7 +21,6 @@ from lambda_restapi.api.errors.exceptions import MyCustomException
 from lambda_restapi.core.config import (
     ALLOWED_HOSTS,
     API_PREFIX,
-    ASSETS_PATH,
     DEBUG,
     DESCRIPTION,
     PROJECT_NAME,
@@ -69,16 +66,15 @@ def get_application() -> FastAPI:
     application.add_exception_handler(MyCustomException, creation_error_handler)
 
     # Routes
-    application.include_router(root_router, prefix="")
-    application.include_router(api_router, prefix=f"{API_PREFIX}/v1")
+    application.include_router(main_router)
 
     # Add mount static files for generated assets to be downloadable
-    application.mount(
-        f"/{ASSETS_PATH.name}", StaticFiles(directory=f"/{ASSETS_PATH}"), name="static",
-    )
+    # application.mount(
+    #     f"/{ASSETS_PATH.name}", StaticFiles(directory=f"/{ASSETS_PATH}"), name="static",
+    # )
 
     return application
 
 
 app = get_application()
-lambda_handler = Mangum(app, enable_lifespan=False)
+lambda_handler = Mangum(app, lifespan="off")

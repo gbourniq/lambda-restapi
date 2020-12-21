@@ -9,7 +9,7 @@ from fastapi import Header
 from pydantic import BaseModel, Field
 
 from lambda_restapi.api.errors.exceptions import MyCustomException
-from lambda_restapi.core.config import DEFAULT_KEY_HEADER, SECRET_KEY_HEADER
+from lambda_restapi.core.config import SECRET_KEY_HEADER
 
 
 class ModelName(str, Enum):
@@ -40,9 +40,7 @@ class CommonQueryParams(BaseModel):
     model_name: ModelName = Field(title="Model name", default=ModelName.resnet.value)
 
 
-async def verify_api_key(
-    x_api_key: str = Header(default=DEFAULT_KEY_HEADER),
-) -> NoReturn:
+async def verify_api_key(x_api_key: str = Header(...),) -> NoReturn:
     """Depencies to check if provided x-api-key is valid."""
     if x_api_key != str(SECRET_KEY_HEADER):
         raise MyCustomException(name="x-api-key header invalid")

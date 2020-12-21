@@ -1,3 +1,5 @@
+"""This module contains all endpoints at the root path level /"""
+
 from fastapi import APIRouter
 
 router = APIRouter()
@@ -5,13 +7,5 @@ router = APIRouter()
 
 @router.get("/ping")
 def pong():
-    """
-    Sanity check.
-
-    This will let the user know that the service is operational.
-
-    And this path operation will:
-    * show a lifesign
-
-    """
+    """Healthcheck endpoint to ensure the service is operational."""
     return {"ping": "pong!"}

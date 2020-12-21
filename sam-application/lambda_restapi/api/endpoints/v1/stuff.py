@@ -5,7 +5,7 @@ This module defines operations for the following /api/v1/stuff endpoint
 from typing import List
 
 from aws_lambda_powertools.metrics import MetricUnit
-from fastapi import APIRouter, Body, Depends, File, Form, Path, UploadFile, status
+from fastapi import APIRouter, Body, Depends, Path, status
 from starlette.exceptions import HTTPException
 
 from lambda_restapi.api.dependencies.common import CommonQueryParams
@@ -86,12 +86,12 @@ def post_stuff(order_item: OrderItem = Body(...)):
     return order_item
 
 
-@router.post("/upload-files-and-form-data/", status_code=status.HTTP_202_ACCEPTED)
-async def upload_files_and_form_data(
-    file_A: bytes = File(...), file_B: UploadFile = File(...), token: str = Form(...),
-):
-    return {
-        "file_size": len(file_A),
-        "token": token,
-        "fileb_content_type": file_B.content_type,
-    }
+# @router.post("/upload-files-and-form-data/", status_code=status.HTTP_202_ACCEPTED)
+# async def upload_files_and_form_data(
+#     file_A: bytes = File(...), file_B: UploadFile = File(...), token: str = Form(...),
+# ):
+#     return {
+#         "file_size": len(file_A),
+#         "token": token,
+#         "fileb_content_type": file_B.content_type,
+#     }

@@ -58,9 +58,11 @@ unit-tests:
 open-cov-report:
 	@ open htmlcov/index.html
 
+# For testing during development
 start-fastapi-server:
 	@ uvicorn lambda_restapi.main:app --host 0.0.0.0 --port 8080 --reload
 
+# For integrations tests as part of CD pipeline
 start-api:
 	@ ${INFO} "Running local API to test incoming API Gateway Proxy events"
 	@ sam local start-api --template-file integration_tests/local-api.yaml
