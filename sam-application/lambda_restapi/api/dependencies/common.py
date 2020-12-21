@@ -24,14 +24,10 @@ class ModelName(str, Enum):
 
 
 class CommonQueryParams(BaseModel):
-    """First dependency (must be callable)
-    that expects 3 optional query parameters
-
+    """Callable dependency that expects 2 query parameters
     Args:
-        q (str, optional). Defaults to None.
-        skip (int, optional). Defaults to 0.
-        limit (int, optional). Defaults to 100.
-
+        debug (bool, optional). Defaults to False.
+        model_name (str). Defaults to "resnet".
     Returns:
         (dict). dict containing those values
     """

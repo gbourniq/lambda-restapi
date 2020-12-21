@@ -2,7 +2,12 @@ from http import HTTPStatus
 
 from fastapi.testclient import TestClient
 
-EXAMPLE_API_PREFIX = "/api/v1/example"
+from lambda_restapi.core.config import TEST_SERVER
+
+if TEST_SERVER == "http://testserver":
+    EXAMPLE_API_PREFIX = "api/v1/example/"
+else:
+    EXAMPLE_API_PREFIX = f"{TEST_SERVER}/api/v1/example"
 
 
 def test_get_example(mock_client: TestClient):

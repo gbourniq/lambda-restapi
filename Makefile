@@ -50,25 +50,27 @@ build:
 ### Testing ###
 .PHONY: unit-tests get-cov-report start-fastapi-server start-api test-api-local
 
-unit-tests:
-	@ ${INFO} "Running unit tests..."
-	@ pytest .
-	@ ${INFO} "Run 'make open-cov-report' to view coverage details"
-
-open-cov-report:
-	@ open htmlcov/index.html
-
-# For testing during development
+# For quick manual testing during development
 start-fastapi-server:
 	@ uvicorn lambda_restapi.main:app --host 0.0.0.0 --port 8080 --reload
+
+test:
+	@ ${INFO} "Running tests using the FastAPI Test client"
+	@ pytest .
+	@ ${INFO} "Run 'make open-cov-report' to view coverage details"
 
 # For integrations tests as part of CD pipeline
 start-api:
 	@ ${INFO} "Running local API to test incoming API Gateway Proxy events"
-	@ sam local start-api --template-file integration_tests/local-api.yaml
+	@ sam local start-api --template-file sam-application/sam-template.yaml
 
-test-api-local:
-	@ python integration_tests/run_api_tests.py --server http://127.0.0.1:3000/api/
+test-local-api:
+	@ ${INFO} "Running tests against a FastAPI server at http://127.0.0.1:3000"
+	@ export TEST_SERVER=http://127.0.0.1:3000 && pytest .
+	@ ${INFO} "Run 'make open-cov-report' to view coverage details"
+
+open-cov-report:
+	@ open htmlcov/index.html
 
 
 ### Deployment ###

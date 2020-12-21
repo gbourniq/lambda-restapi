@@ -5,11 +5,15 @@ import pytest
 from aws_lambda_powertools.utilities.parser import parse
 from fastapi.testclient import TestClient
 
+from lambda_restapi.core.config import TEST_SERVER
 from lambda_restapi.helpers.constants import CustomExceptionCodes
 from lambda_restapi.models.input import OrderItem
 from lambda_restapi.models.output import BucketNames
 
-STUFF_API_PREFIX = "api/v1/stuff/"
+if TEST_SERVER == "http://testserver":
+    STUFF_API_PREFIX = "api/v1/stuff/"
+else:
+    STUFF_API_PREFIX = f"{TEST_SERVER}/api/v1/stuff"
 
 # pylint: disable=not-callable
 @pytest.mark.parametrize(
@@ -27,10 +31,7 @@ def test_get_stuff(
     """Asserts get stuff endpoint works with expected parameters"""
 
     # Given: A url with path parameters and query parameters
-    url = STUFF_API_PREFIX
-    url += f"/{id_}"
-    url += f"?debug={debug}"
-    url += f"&model_name={model_name}"
+    url = f"{STUFF_API_PREFIX}/{id_}?debug={debug}&model_name={model_name}"
 
     # When: calling the get method
     response = mock_client.get(url, headers=mock_api_key)
@@ -44,14 +45,13 @@ def test_get_stuff(
     assert response.json()["model_name"] == model_name
 
 
-def test_get_42_debug_raise_error(mock_client: TestClient, mock_api_key: Dict):
+def test_get_42_with_debug_true_raises_error(
+    mock_client: TestClient, mock_api_key: Dict
+):
     """Asserts get stuff endpoint works with expected parameters"""
 
     # Given: A url with path parameters and query parameters
-    url = STUFF_API_PREFIX
-    url += "/42"
-    url += "?debug=true"
-    url += "&model_name=resnet"
+    url = f"{STUFF_API_PREFIX}/42?debug=true&model_name=resnet"
 
     # When: calling the get method
     response = mock_client.get(url, headers=mock_api_key)
@@ -66,7 +66,7 @@ def test_post_stuff(mock_client: TestClient, mock_api_key: Dict):
     """Asserts post stuff endpoint works with expected parameters"""
 
     # Given: A url with no path parameters / query parameters
-    url = STUFF_API_PREFIX
+    url = f"{STUFF_API_PREFIX}/"
 
     # Given: Valid body request parameters
     json = {"id": 42, "name": "mock_item_name"}
@@ -86,7 +86,7 @@ def test_invalid_api_key(mock_client: TestClient):
     """Asserts post stuff endpoint works with expected parameters"""
 
     # Given: A url with no path parameters / query parameters
-    url = STUFF_API_PREFIX
+    url = f"{STUFF_API_PREFIX}/"
     # Given: Valid body request parameters
     json = {"id": 42, "name": "mock_item_name"}
     # Given: Invalid headers with missing or invalid api key

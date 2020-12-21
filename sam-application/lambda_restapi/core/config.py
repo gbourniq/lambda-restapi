@@ -1,3 +1,4 @@
+from os import getenv
 from typing import List
 
 from starlette.config import Config
@@ -9,7 +10,7 @@ VERSION = "1.0.0"
 config = Config(".env")
 
 DEBUG: bool = config("DEBUG", cast=bool, default=False)
-SECRET_KEY_HEADER: Secret = config("SECRET_KEY_HEADER", cast=Secret)
+SECRET_KEY_HEADER: Secret = config("SECRET_KEY_HEADER", cast=Secret, default="secret")
 # ROOT_PATH must match the API GTW deployment stage if FastAPI server running on Lambda
 ROOT_PATH: str = config("ROOT_PATH", default="/")
 PROJECT_NAME: str = config("PROJECT_NAME", default="FastAPI example application")
@@ -17,6 +18,7 @@ DESCRIPTION: str = config("DESCRIPTION", default="RESTful APIs to create <...>")
 ALLOWED_HOSTS: List[str] = config(
     "ALLOWED_HOSTS", cast=CommaSeparatedStrings, default="",
 )
+TEST_SERVER = getenv("TEST_SERVER", "http://testserver")
 
 # Static assets
 # if getenv("ASSETS_PATH"):
