@@ -3,6 +3,7 @@ This module defines various helper functions to communicate with AWS services
 """
 from typing import List, Optional, Union
 
+import boto3
 from aws_lambda_powertools.utilities import parameters
 from aws_lambda_powertools.utilities.parameters.exceptions import GetParameterError
 
@@ -27,3 +28,8 @@ def get_ssm_parameter(
             return default
         raise get_param_err
     return data
+
+
+def get_s3_client():
+    """Return a boto3 s3 client"""
+    return boto3.client("s3")

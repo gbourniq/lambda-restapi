@@ -1,3 +1,7 @@
+"""
+This module defines operations for the following /api/v1/example endpoint
+"""
+
 from fastapi import APIRouter
 
 from lambda_restapi.models.input import InputExample
@@ -6,7 +10,7 @@ from lambda_restapi.models.output import OutputExample
 router = APIRouter()
 
 
-@router.get("/example")
+@router.get("/")
 def example_get():
     """
     Say hej!
@@ -19,7 +23,7 @@ def example_get():
     return {"msg": "Hej!"}
 
 
-@router.post("/example", response_model=OutputExample)
+@router.post("/", response_model=OutputExample)
 def example_endpoint(inputs: InputExample):
     """
     Multiply two values

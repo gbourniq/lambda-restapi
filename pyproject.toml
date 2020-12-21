@@ -8,6 +8,7 @@ authors = []
 aiofiles = "^0.6.0"                                 # Apache 2.0
 aws-lambda-powertools = {version = "^1.9.0", extras = ["pydantic", "typing_extensions"]}
 python = "3.8.0"                                    # PSF
+python-multipart = "^0.0.5"                         # Apache 2.0
 fastapi = "^0.62.0"                                 # MIT
 mangum = "^0.10.0"                                  # Apache 2.0
 requests = "^2.22"                                  # Apache 2.0

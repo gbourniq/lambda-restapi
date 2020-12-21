@@ -70,7 +70,7 @@ def get_application() -> FastAPI:
 
     # Routes
     application.include_router(root_router, prefix="")
-    application.include_router(api_router, prefix=API_PREFIX)
+    application.include_router(api_router, prefix=f"{API_PREFIX}/v1")
 
     # Add mount static files for generated assets to be downloadable
     application.mount(
