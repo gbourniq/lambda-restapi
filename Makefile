@@ -59,17 +59,16 @@ test:
 	@ pytest .
 	@ ${INFO} "Run 'make open-cov-report' to view coverage details"
 
-# For integrations tests as part of CD pipeline
 start-api:
 	@ ${INFO} "Running local API to test incoming API Gateway Proxy events"
 	@ sam local start-api --template-file sam-application/sam-template.yaml
 
 test-local-api:
-	@ ${INFO} "Running tests against a FastAPI server at http://127.0.0.1:3000"
+	@ ${INFO} "Running tests against a FastAPI server running at http://127.0.0.1:3000"
 	@ export TEST_SERVER=http://127.0.0.1:3000 && pytest .
 
 test-dev-api:
-	@ ${INFO} "Running tests against a FastAPI server at $$($(call get_dev_endpoint))"
+	@ ${INFO} "Running tests against a FastAPI server running at $$($(call get_dev_endpoint))"
 	@ export TEST_SERVER=$$($(call get_dev_endpoint)) && pytest .
 
 open-cov-report:

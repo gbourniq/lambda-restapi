@@ -1,5 +1,4 @@
 tests: Is best at the Lambda level, or FastAPI level (deeper) 
 Use Lambda powertools?
-sort out testing
 Manage basic authentication
 test .env with the config file
