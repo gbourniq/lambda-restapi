@@ -138,7 +138,7 @@ def lambda_handler(
         Dict[str, Any]: JSON response to return to the API Gateway
     """
 
-    asgi_handler = Mangum(app, lifespan="auto", api_gateway_base_path="dev")
+    asgi_handler = Mangum(app, lifespan="auto", api_gateway_base_path=ROOT_PATH)
 
     # Call the instance with the event arguments
     response = asgi_handler(event, context)

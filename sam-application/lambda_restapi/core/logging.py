@@ -2,7 +2,6 @@
 This module defines the logger and metrics objects
 """
 
-
 from aws_lambda_powertools import Logger, Metrics
 
 from lambda_restapi.core.config import (
