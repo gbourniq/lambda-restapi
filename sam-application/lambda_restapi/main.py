@@ -89,9 +89,6 @@ def get_application() -> FastAPI:
     return application
 
 
-app = get_application()
-
-
 @lambda_handler_decorator
 def middleware_before_after(
     handler: Callable, event: Dict[str, Any], context: LambdaContext
@@ -102,16 +99,16 @@ def middleware_before_after(
     before calling the lambda handler, and for any clean up operations afterwards.
     """
     # Convert the incoming Dict event to a APIGatewayProxyEvent.
-    event: APIGatewayProxyEvent = APIGatewayProxyEvent(event)
+    api_gtw_event: APIGatewayProxyEvent = APIGatewayProxyEvent(event)
 
     # Log request method and path
     logger.info(
-        f"{event.http_method} request to {event.path} on "
-        f"{event.multi_value_headers.get('Host').pop()}"
+        f"{api_gtw_event.http_method} request to {api_gtw_event.path} on "
+        f"{api_gtw_event.multi_value_headers.get('Host').pop()}"
     )
 
     # Get APIGatewayEventRequestContext and APIGatewayEventIdentity objects
-    request_context: APIGatewayEventRequestContext = event.request_context
+    request_context: APIGatewayEventRequestContext = api_gtw_event.request_context
     identity: APIGatewayEventIdentity = request_context.identity
 
     # Append user to logs (if integration with IAM/Cognito), or source IP
@@ -125,6 +122,7 @@ def middleware_before_after(
     return response
 
 
+@middleware_before_after
 @logger.inject_lambda_context(log_event=LOG_FULL_EVENT)
 @metrics.log_metrics(raise_on_empty_metrics=False)
 def lambda_handler(
@@ -144,3 +142,6 @@ def lambda_handler(
     response = asgi_handler(event, context)
 
     return response
+
+
+app = get_application()
