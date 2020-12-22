@@ -52,7 +52,7 @@ build:
 
 # For quick manual testing during development
 start-fastapi-server:
-	@ uvicorn lambda_restapi.main:app --host 0.0.0.0 --port 8080 --reload
+	@ source .env && uvicorn lambda_restapi.main:app --host 0.0.0.0 --port 8080 --reload
 
 test:
 	@ ${INFO} "Running tests using the FastAPI Test client"
