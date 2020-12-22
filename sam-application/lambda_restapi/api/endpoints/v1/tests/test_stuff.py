@@ -28,7 +28,11 @@ else:
     ],
 )
 def test_get_stuff(
-    mock_client: TestClient, mock_api_key: Dict, debug: bool, id_: int, model_name: str
+    mock_client: TestClient,
+    mock_secret_key: Dict,
+    debug: bool,
+    id_: int,
+    model_name: str,
 ):
     """Asserts get stuff endpoint works with expected parameters"""
 
@@ -36,7 +40,7 @@ def test_get_stuff(
     url = f"{STUFF_API_PREFIX}/{id_}?debug={debug}&model_name={model_name}"
 
     # When: calling the get method
-    response = mock_client.get(url, headers=mock_api_key)
+    response = mock_client.get(url, headers=mock_secret_key)
 
     # Then: Returned status code is 200
     assert response.status_code == HTTPStatus.OK.value
@@ -48,7 +52,7 @@ def test_get_stuff(
 
 
 def test_get_42_with_debug_true_raises_error(
-    mock_client: TestClient, mock_api_key: Dict
+    mock_client: TestClient, mock_secret_key: Dict
 ):
     """Asserts get stuff endpoint works with expected parameters"""
 
@@ -56,7 +60,7 @@ def test_get_42_with_debug_true_raises_error(
     url = f"{STUFF_API_PREFIX}/42?debug=true&model_name=resnet"
 
     # When: calling the get method
-    response = mock_client.get(url, headers=mock_api_key)
+    response = mock_client.get(url, headers=mock_secret_key)
 
     # Then: Returned status code is 419
     assert response.status_code == CustomExceptionCodes.HTTP_419_CREATION_FAILED.value
@@ -64,7 +68,7 @@ def test_get_42_with_debug_true_raises_error(
     assert response.json() == {"errors": "oops.. id 42 does not work with Debug mode"}
 
 
-def test_post_stuff(mock_client: TestClient, mock_api_key: Dict):
+def test_post_stuff(mock_client: TestClient, mock_secret_key: Dict):
     """Asserts post stuff endpoint works with expected parameters"""
 
     # Given: A url with no path parameters / query parameters
@@ -74,7 +78,7 @@ def test_post_stuff(mock_client: TestClient, mock_api_key: Dict):
     json = {"id": 42, "name": "mock_item_name"}
 
     # When: calling the post method
-    response = mock_client.post(url, json=json, headers=mock_api_key)
+    response = mock_client.post(url, json=json, headers=mock_secret_key)
 
     # Then: Returned status code is 201
     assert response.status_code == HTTPStatus.CREATED.value
@@ -92,7 +96,7 @@ def test_invalid_api_key(mock_client: TestClient):
     # Given: Valid body request parameters
     json = {"id": 42, "name": "mock_item_name"}
     # Given: Invalid headers with missing or invalid api key
-    headers = {"x-api-key": "nope"}
+    headers = {"x-secret-key": "nope"}
 
     # When: calling the post method
     response = mock_client.post(url, json=json, headers=headers)
@@ -100,4 +104,4 @@ def test_invalid_api_key(mock_client: TestClient):
     # Then: Returned custom status code 419
     assert response.status_code == CustomExceptionCodes.HTTP_419_CREATION_FAILED.value
     # Then: Returned values are what we expected
-    assert response.json() == {"errors": "x-api-key header invalid"}
+    assert response.json() == {"errors": "x-secret-key header invalid"}

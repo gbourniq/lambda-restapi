@@ -36,8 +36,8 @@ class CommonQueryParams(BaseModel):
     model_name: ModelName = Field(title="Model name", default=ModelName.resnet.value)
 
 
-async def verify_api_key(x_api_key: str = Header(...),) -> NoReturn:
-    """Depencies to check if provided x-api-key is valid."""
-    if x_api_key != str(SECRET_KEY_HEADER):
-        raise MyCustomException(name="x-api-key header invalid")
-    return x_api_key
+async def verify_secret_key(x_secret_key: str = Header(...),) -> NoReturn:
+    """Depencies to check if provided secret-key is valid."""
+    if x_secret_key != str(SECRET_KEY_HEADER):
+        raise MyCustomException(name="x-secret-key header invalid")
+    return x_secret_key

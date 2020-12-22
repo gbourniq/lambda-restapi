@@ -25,6 +25,6 @@ def mock_client() -> Generator:
 
 
 @pytest.fixture(scope="module")
-def mock_api_key() -> Dict:
-    """Retuns the valid mock x-api-key headers"""
-    return {"x-api-key": "secret"}
+def mock_secret_key() -> Dict:
+    """Retuns the valid mock x-secret-key headers"""
+    return {"x-secret-key": "secret"}
