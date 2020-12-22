@@ -20,4 +20,5 @@ script:
   - make start-api &
   - make test-local-api
   - make deploy
-  - make test-dev-api
+  - make check-api-is-secured
+  - make check-healthcheck-endpoint

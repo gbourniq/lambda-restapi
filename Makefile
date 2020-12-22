@@ -67,16 +67,12 @@ test-local-api:
 	@ ${INFO} "Running tests against a FastAPI server running at http://127.0.0.1:3000"
 	@ export TEST_SERVER=http://127.0.0.1:3000 && pytest .
 
-test-dev-api:
-	@ ${INFO} "Running tests against a FastAPI server running at $$($(call get_dev_endpoint))"
-	@ export TEST_SERVER=$$($(call get_dev_endpoint)) && pytest .
-
 open-cov-report:
 	@ open htmlcov/index.html
 
 
 ### Deployment ###
-.PHONY: package deploy update get-dev-endpoint test-api-dev get-logs
+.PHONY: package deploy update get-dev-endpoint get-logs check-api-is-secured check-healthcheck-endpoint
 package:
 	@ sam package \
 		--template-file sam-application/sam-template.yaml \
@@ -96,18 +92,22 @@ deploy:
 
 update: package deploy
 
-get-dev-endpoint:
-	@ ${INFO} "API Gateway endpoint"
-	@ $(call get_dev_endpoint)
-	@ ${INFO} "API Key value"
-	@ $(call get_api_key_value)
-
-test-api-dev:
-	@ python integration_tests/run_api_tests.py --server "$$($(call get_dev_endpoint))" --api-key "$$($(call get_api_key_value))"
-
 get-logs:
 	@ ${INFO} "Tailing logs for the FastApiFunction Lambda function from stack '${STACK_NAME}'"
 	@ sam logs -n FastApiFunction --stack-name ${STACK_NAME} --tail
+
+get-dev-endpoint:
+	@ ${INFO} "API Gateway endpoint and API Key value"
+	@ $(call get_dev_endpoint)
+	@ $(call get_api_key_value)
+
+check-api-is-secured:
+	@ ${INFO} "Ping healthcheck endpoint at $$($(call get_dev_endpoint))/ping without API Key"
+	@ $(call check_api_endpoint_is_secured)
+
+check-healthcheck-endpoint:
+	@ ${INFO} "Ping healthcheck endpoint at $$($(call get_dev_endpoint))/ping with API Key"
+	@ $(call check_api_healthcheck_endpoint)
 
 
 ### Clean up ###
@@ -131,6 +131,21 @@ aws apigateway get-api-keys \
 	--name-query ${API_KEY_NAME} | jq '.["items"][0]["value"]' | tr -d \"
 endef
 
+define check_api_endpoint_is_secured
+@if [ "$$(curl -s -o /dev/null -w "%{http_code}" $$($(call get_dev_endpoint))/ping)" == "403" ]; then\
+	echo "🔑 Endpoint is secured";\
+else\
+	echo "❌ Endpoint not secured"; exit 1;\
+fi
+endef
+
+define check_api_healthcheck_endpoint
+@if [ "$$(curl -s -H "x-api-key: $$($(call get_api_key_value))" $$($(call get_dev_endpoint))/ping)" == '{"ping":"pong!"}' ]; then\
+	echo "✅ Healthcheck OK";\
+else\
+	echo "❌ Unexpected response"; exit 1;\
+fi
+endef
 
 ### Helpers ###
 RED := "\e[1;31m"
