@@ -101,12 +101,6 @@ def middleware_before_after(
     # Convert the incoming Dict event to a APIGatewayProxyEvent.
     api_gtw_event: APIGatewayProxyEvent = APIGatewayProxyEvent(event)
 
-    # Log request method and path
-    logger.info(
-        f"{api_gtw_event.http_method} request to {api_gtw_event.path} on "
-        f"{api_gtw_event.multi_value_headers.get('Host').pop()}"
-    )
-
     # Get APIGatewayEventRequestContext and APIGatewayEventIdentity objects
     request_context: APIGatewayEventRequestContext = api_gtw_event.request_context
     identity: APIGatewayEventIdentity = request_context.identity
@@ -114,6 +108,12 @@ def middleware_before_after(
     # Append user to logs (if integration with IAM/Cognito), or source IP
     logger.structure_logs(
         append=True, user=identity.user if identity.user else identity.source_ip,
+    )
+
+    # Log request method and path
+    logger.info(
+        f"{api_gtw_event.http_method} request to {api_gtw_event.path} on "
+        f"{api_gtw_event.multi_value_headers.get('Host').pop()}"
     )
 
     # Invoke Lambda
