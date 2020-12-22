@@ -17,7 +17,7 @@ def test_get_example(mock_client: TestClient):
     response = mock_client.get(f"{EXAMPLE_API_PREFIX}/")
 
     assert response.status_code == HTTPStatus.OK.value
-    assert response.json() == {"msg": "Hey!"}
+    assert "Hello" in response.json()["msg"]
 
 
 def test_post_example(mock_client: TestClient):

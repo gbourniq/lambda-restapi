@@ -1,4 +1,7 @@
 tests: Is best at the Lambda level, or FastAPI level (deeper) 
 Use Lambda powertools?
 Manage basic authentication
-test .env with the config file
+test .env and/or sort out config file, and SAM environment variable.. make it one place to configure everything
+add rate limits to api gateway + api key??
+get api key from app
+do readme

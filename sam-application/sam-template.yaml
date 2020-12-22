@@ -35,7 +35,7 @@ Resources:
       CodeUri: ./
       Handler: lambda_restapi.main.lambda_handler
       Runtime: python3.8
-      MemorySize: 128
+      MemorySize: 3008
       Description: Lambda running the FastAPI framework
       Policies: # AWS Managed Policies
         - AmazonSSMFullAccess
