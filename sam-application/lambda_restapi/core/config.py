@@ -3,7 +3,7 @@ from pathlib import Path
 from typing import List
 
 from starlette.config import Config
-from starlette.datastructures import CommaSeparatedStrings, Secret
+from starlette.datastructures import URL, CommaSeparatedStrings, Secret
 
 # Paths
 SAM_APP_DIR = Path(__file__).resolve().parent.parent.parent
@@ -26,7 +26,7 @@ DESCRIPTION: str = config("DESCRIPTION")
 PROJECT_NAME: str = config("PROJECT_NAME")
 ROOT_PATH: str = config("ROOT_PATH", default="/")  # Set in sam-template.yaml
 SECRET_KEY_HEADER: Secret = config("SECRET_KEY_HEADER", cast=Secret)
-TEST_SERVER: str = config("TEST_SERVER")
+TEST_SERVER: str = config("TEST_SERVER", cast=URL)
 VERSION: str = config("VERSION")
 
 # Static assets
