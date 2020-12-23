@@ -11,7 +11,7 @@ This project contains a base files and make commands to quickly develop and depl
 Infrastructure, application code and package dependencies are managed by the AWS Serverless Application Framework, and a CI/CD build configuration pipeline is defined in the `.travis.yaml` file.
 
 
-## Contents
+## Contents
 
 - [Prerequisites](#Prerequisites)
 - [Virtual environment and git-hooks setup](#virtual-environment-and-git-hooks-setup)
