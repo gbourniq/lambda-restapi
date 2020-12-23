@@ -10,6 +10,7 @@ This project contains a base files and make commands to quickly develop and depl
 
 Infrastructure, application code and package dependencies are managed by the AWS Serverless Application Framework, and a CI/CD build configuration pipeline is defined in the `.travis.yaml` file.
 
+
 ## Contents
 - [Prerequisites](#Prerequisites)
 - [Virtual environment and git-hooks setup](#virtual-environment-and-git-hooks-setup)
@@ -17,8 +18,8 @@ Infrastructure, application code and package dependencies are managed by the AWS
 - [Local development and testing](#local-development-and-testing)
 - [API Gateway and Lambda deployment to AWS](#api-gateway-and-lambda-deployment-to-aws)
 - [Secure the API Gateway endpoint](#secure-the-api-gateway-endpoint)
-- [Production endpoint with a Custom Domain Name](#production-endpoind-with-a-custom-domain-name)
-- [CI/CD](#ci-cd)
+- [Production endpoint with a Custom Domain Name](#production-endpoint-with-a-custom-domain-name)
+- [CI/CD](#ci/cd)
 
 ## Prerequisites
 - Configure the [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html) with your AWS credentials.
