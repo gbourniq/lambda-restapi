@@ -12,6 +12,7 @@ Infrastructure, application code and package dependencies are managed by the AWS
 
 
 ## Contents
+
 - [Prerequisites](#Prerequisites)
 - [Virtual environment and git-hooks setup](#virtual-environment-and-git-hooks-setup)
 - [Build python dependencies as a Lambda layer](#build-python-dependencies-as-a-lambda-layer)
@@ -19,7 +20,7 @@ Infrastructure, application code and package dependencies are managed by the AWS
 - [API Gateway and Lambda deployment to AWS](#api-gateway-and-lambda-deployment-to-aws)
 - [Secure the API Gateway endpoint](#secure-the-api-gateway-endpoint)
 - [Production endpoint with a Custom Domain Name](#production-endpoint-with-a-custom-domain-name)
-- [CI/CD](#ci/cd)
+- [CI/CD](#cicd)
 
 ## Prerequisites
 - Configure the [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html) with your AWS credentials.
