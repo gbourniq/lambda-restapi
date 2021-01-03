@@ -4,7 +4,7 @@ SHELL=/bin/bash -e -o pipefail
 ### Environment variables ###
 CONDA_ENV_NAME=lambda-restapi
 CONDA_ACTIVATE=source $$(conda info --base)/etc/profile.d/conda.sh ; conda activate
-S3_BUCKET_NAME=gbournique-s3-sam-builds
+S3_BUCKET_NAME=gbournique-sam-artifacts
 # Deployed resources
 VERSION=$(shell poetry version | awk '{print $$NF}')
 APP_NAME=lambda-restapi-stack
