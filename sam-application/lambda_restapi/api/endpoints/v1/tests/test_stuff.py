@@ -1,11 +1,11 @@
 """This module defines unit tests for the stuff endpoint"""
 
 from http import HTTPStatus
-from typing import Dict
 
 import pytest
 from aws_lambda_powertools.utilities.parser import parse
 from fastapi.testclient import TestClient
+from starlette.datastructures import Headers
 
 from lambda_restapi.core.config import TEST_SERVER
 from lambda_restapi.helpers.constants import CustomExceptionCodes
@@ -29,7 +29,7 @@ else:
 )
 def test_get_stuff(
     mock_client: TestClient,
-    mock_secret_key: Dict,
+    mock_secret_key: Headers,
     debug: bool,
     id_: int,
     model_name: str,
@@ -52,7 +52,7 @@ def test_get_stuff(
 
 
 def test_get_42_with_debug_true_raises_error(
-    mock_client: TestClient, mock_secret_key: Dict
+    mock_client: TestClient, mock_secret_key: Headers
 ):
     """Asserts get stuff endpoint works with expected parameters"""
 
@@ -68,7 +68,7 @@ def test_get_42_with_debug_true_raises_error(
     assert response.json() == {"errors": "oops.. id 42 does not work with Debug mode"}
 
 
-def test_post_stuff(mock_client: TestClient, mock_secret_key: Dict):
+def test_post_stuff(mock_client: TestClient, mock_secret_key: Headers):
     """Asserts post stuff endpoint works with expected parameters"""
 
     # Given: A url with no path parameters / query parameters

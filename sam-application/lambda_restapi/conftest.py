@@ -1,10 +1,11 @@
 """This file defines pytest fixtures"""
 
-from typing import Dict, Generator
+from typing import Generator
 
 import pytest
 import requests
 from fastapi.testclient import TestClient
+from starlette.datastructures import Headers
 
 from lambda_restapi.core.config import TEST_SERVER
 from lambda_restapi.main import get_application
@@ -25,6 +26,6 @@ def mock_client() -> Generator:
 
 
 @pytest.fixture(scope="module")
-def mock_secret_key() -> Dict:
+def mock_secret_key() -> Headers:
     """Retuns the valid mock x-secret-key headers"""
-    return {"x-secret-key": "secret"}
+    return Headers({"x-secret-key": "secret"})
